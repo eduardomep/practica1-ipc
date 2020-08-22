@@ -7,6 +7,7 @@ package process;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import static practica1.Practica1.scanner;
@@ -20,7 +21,37 @@ public class Encoding {
     public static double matrixToEncoding[][];
     //Matriz que guarda las filas de la matriz original
     public static int rowsForFinalMatrix = 0;
+    public static int reportNumber=1;
+    public static String htmlToPrint;
     
+    static void createHtml() {
+        try {
+          File myObj = new File("reporteDeCoficacion+"+reportNumber+".html");
+          if (myObj.createNewFile()) {
+              //Si el archivo ha sido creado con exito
+            try {
+              FileWriter myWriter = new FileWriter("reporteDeCoficacion+"+reportNumber+".html");
+              //Escribiendo el encabezado
+              myWriter.write("<!DOCTYPE html><html lang=\"es\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Document</title><link rel=\"stylesheet\" href=\"https://eduardomep.github.io/practica1-ipc/htmlTemplate/style.css\"></head><body><div class=\"hero\"><h1>Mep Encoder</h1><img src=\"https://eduardomep.github.io/practica1-ipc/htmlTemplate/img/logo.png\" alt=\"Mep Encoder\"><div class=\"version\"><p>V 1.0 Beta</p></div><p class=\"made\">With ♥ by <a href=\"https://www.instagram.com/eduardomep/\">eduardomep</a></p></div><div class=\"content\">");
+              //Escribindo el contenido
+              myWriter.write(htmlToPrint);
+              //Escribiendo el final de mi documento
+              myWriter.write("</div></body></html>");
+              myWriter.close();
+              System.out.println("hetml creado");
+            } catch (IOException e) {
+              System.out.println("An error occurred.");
+              e.printStackTrace();
+            }
+          } else {
+            reportNumber++;
+            createHtml();
+          }
+        } catch (IOException e) {
+          System.out.println("An error occurred.");
+          e.printStackTrace();
+        }
+    }    
 
     public static void multiplyMatrix(double[][] matrixNxN){
         //Guardamos las columnas de la matriz final obtenidas de la matriz a multiplicar
@@ -53,6 +84,9 @@ public class Encoding {
             }
             System.out.println("");
         }
+        createHtml();
+        
+        
 
         
     }
@@ -127,8 +161,11 @@ public class Encoding {
     //Metodo para obtener el texto
     public static void getText() throws IOException {
         System.out.println("Ingresa un texto a codificar");
+
         String originalText = scanner.nextLine();
         //Guardando la longitud del texto
+        //Contenido para el html
+        htmlToPrint = htmlToPrint + "<h1>Texto a codificar: " + originalText +"</h1>";
         int textLenght = originalText.length();
         // Variables para el tamaño de la matriz
         int matrixRows = 0;
@@ -179,6 +216,21 @@ public class Encoding {
         }
         //Obtenemos el tamaño de caracteres de la matriz
         System.out.println("El texto tiene: " + charactersIndex +" caracteres");
+        //Contenido para el html
+        htmlToPrint = htmlToPrint + "<p>El texto tiene: " + charactersIndex +" caracteres y se almacenara en una matriz de "+matrixRows+"x"+matrixCols+"</p>";
+        //Imprimiendo matriz en html
+        htmlToPrint = htmlToPrint +"<table>";
+        for (int row=0; row<matrixRows; row++){
+            htmlToPrint = htmlToPrint +"<tr>";
+            for (int col=0; col<matrixCols; col++){
+                //Almacenando los datos del array de caracteres convertidos a decimal en la posición de la matriz usando contador auxiliar
+                htmlToPrint = htmlToPrint +"<td>"+matrix[row][col] +"</td>"; 
+                //Aumentando contado auxiliar
+                charactersIndex++;
+            }
+            htmlToPrint = htmlToPrint +"</tr>";
+        }
+        htmlToPrint = htmlToPrint +"</table>";        
         matrixToEncoding = matrix;
         getMatrix(matrixRows, matrixCols,matrix);
         

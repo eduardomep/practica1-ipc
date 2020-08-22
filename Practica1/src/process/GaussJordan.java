@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.util.Scanner; // Import the Scanner class to read text files
 
 public class GaussJordan {
+
+    
     public static void printMatrix(double[][] matrix, double[][] inverseMatrix){
         for(int row=0; row<matrix.length;row++){
             System.out.print("| ");
