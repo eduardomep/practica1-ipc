@@ -40,7 +40,7 @@ public class Menu {
                 Encoding.getText();
                 break;
             case 2:
-//                Decoding.getFileOne();
+                Decoding.getFile("archivoUno");
                 break;
             case 3:
                 System.out.println("Seleccionaste opción 3");
@@ -49,9 +49,7 @@ public class Menu {
                 System.out.println("ERROR - Ingresaste una opción inválida");
                 getOption();
                 break;
-                
         }
-    
     }
     public static void main(String[] args) throws IOException {
         print();

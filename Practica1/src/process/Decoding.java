@@ -6,9 +6,11 @@
 package process;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import static practica1.Practica1.scanner;
+import static process.Encoding.reportNumber;
 
 /**
  *
@@ -20,6 +22,35 @@ public class Decoding {
     public static int colsFileOne;
     public static double matrixOne[][];
     public static double matrixTwo[][];
+    public static String htmlToPrint ="";   
+    static void createHtml() {
+        try {
+          File myObj = new File("reporteDeDescifrado-"+reportNumber+".html");
+          if (myObj.createNewFile()) {
+              //Si el archivo ha sido creado con exito
+            try {
+              FileWriter myWriter = new FileWriter("reporteDeDescifrado-"+reportNumber+".html");
+              //Escribiendo el encabezado
+              myWriter.write("<!DOCTYPE html><html lang=\"es\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Document</title><link rel=\"stylesheet\" href=\"https://eduardomep.github.io/practica1-ipc/htmlTemplate/style.css\"></head><body><div class=\"hero\"><h1>Mep Encoder</h1><img src=\"https://eduardomep.github.io/practica1-ipc/htmlTemplate/img/logo.png\" alt=\"Mep Encoder\"><div class=\"version\"><p>V 1.0 Beta</p></div><p class=\"made\">With ♥ by <a href=\"https://www.instagram.com/eduardomep/\">eduardomep</a></p></div><div class=\"content\">");
+              //Escribindo el contenido
+              myWriter.write(htmlToPrint);
+              //Escribiendo el final de mi documento
+              myWriter.write("</div></body></html>");
+              myWriter.close();
+              System.out.println("html creado");
+            } catch (IOException e) {
+              System.out.println("Algo salio mal.");
+              e.printStackTrace();
+            }
+          } else {
+            reportNumber++;
+            createHtml();
+          }
+        } catch (IOException e) {
+          System.out.println("An error occurred.");
+          e.printStackTrace();
+        }
+    }
     
     static void convertToCharacter(double[][] matrix) throws IOException{
         for (int row = 0; row < rowsFileOne; row++) {

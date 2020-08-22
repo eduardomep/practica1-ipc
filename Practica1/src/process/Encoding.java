@@ -152,7 +152,8 @@ public class Encoding {
               FileWriter myWriter = new FileWriter("reporteDeCifrado-"+reportNumber+".html");
               //Escribiendo el encabezado
               myWriter.write("<!DOCTYPE html><html lang=\"es\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Document</title><link rel=\"stylesheet\" href=\"https://eduardomep.github.io/practica1-ipc/htmlTemplate/style.css\"></head><body><div class=\"hero\"><h1>Mep Encoder</h1><img src=\"https://eduardomep.github.io/practica1-ipc/htmlTemplate/img/logo.png\" alt=\"Mep Encoder\"><div class=\"version\"><p>V 1.0 Beta</p></div><p class=\"made\">With ♥ by <a href=\"https://www.instagram.com/eduardomep/\">eduardomep</a></p></div><div class=\"content\">");
-              //Escribindo el contenido
+              //Escribindo el 
+              myWriter.write("<h1 class='main-title'>Cifrado de contraseña 🔒</h1>");
               myWriter.write(htmlToPrint);
               //Escribiendo el final de mi documento
               myWriter.write("</div></body></html>");
